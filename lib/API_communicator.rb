@@ -13,14 +13,23 @@ end
 
 def get_api_auth
   hash = get_hash
-  "?ts=#{hash[0]}&apikey=#{PUBLIC}&hash=#{hash[1]}"
+  "ts=#{hash[0]}&apikey=#{PUBLIC}&hash=#{hash[1]}"
 end
 
 def get_api_search(input)
-  search = input.split(" ").join("%20")
-  "http://gateway.marvel.com:443/v1/public/characters/#{search}"
+  type = input[0]
+  search = input[1].split(" ").join("%20")
+
+  value_id = {"characters" => "name", "creators" => "full name", "events" => "title"}
+
+  if search != ''
+    #search = value_id[type] + "=" + search + "&"
+    search = "name=" + search + "&"
+  end
+  "http://gateway.marvel.com/v1/public/#{type}?#{search}"
 end
 
 def get_api_URL(input)
   get_api_search(input) + get_api_auth
+  # input + get_api_auth
 end
