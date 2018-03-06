@@ -24,3 +24,15 @@
   - If they like this seed, it should prompt to save the seed with a name.
 - If they want to use an old seed, it should perform a seed search based on a saved array and type.
 - If they want info on a track, it should ping spotify servers for that track and provide a prompt to search for any metadata
+
+
+```ruby
+u = User.create("andrew")
+a = Artist.create("bananaphone")
+
+#u.artists will look at join table to grab artists associated with given user
+# << add artist obj to user artists collection
+u.artists << a
+# persist changes in db with save
+u.save
+```
