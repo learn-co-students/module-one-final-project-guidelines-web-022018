@@ -18,14 +18,35 @@ end
 
 def get_api_search(input)
   type = input[0]
-  search = input[1].split(" ").join("%20")
+  search = input[1]#.split(" ").join("%20")
 
-  value_id = {"characters" => "name", "creators" => "full name", "events" => "title"}
-
-  if search != ''
-    #search = value_id[type] + "=" + search + "&"
-    search = "name=" + search + "&"
+  if type == "creators"
+    len = search.split(" ").length
+    if len > 3
+      puts "Sorry, too many names given"
+      return
+    elsif len == 3
+      terms = {"firstName" => search.split(" ")[0], "middleName" => search.split(" ")[1], "lastName" => search.split(" ")[2]}
+    elsif len == 2
+      terms = {"firstName" => search.split(" ")[0], "lastName" => search.split(" ")[1]}
+    else
+      terms = {"lastName" => search}
+    end
+    search = ""
+    terms.each do |keys, vals|
+      search = search + keys + "=" + vals + "&"
+    end
+  else
+    search = search.split(" ").join("%20")
+    if search != ''
+      #search = value_id[type] + "=" + search + "&"
+      search = "name=" + search + "&"
+    end
   end
+
+  #value_id = {"characters" => "name", "creators" => "full name", "events" => "title"}
+
+
   "http://gateway.marvel.com/v1/public/#{type}?#{search}"
 end
 
