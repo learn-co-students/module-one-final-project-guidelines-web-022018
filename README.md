@@ -35,4 +35,6 @@ a = Artist.create("bananaphone")
 u.artists << a
 # persist changes in db with save
 u.save
+
+find_genre(RSpotify::Artist.search(track.artists[0].name)[0].genres[0])
 ```
