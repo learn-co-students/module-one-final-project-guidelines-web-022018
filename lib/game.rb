@@ -1,9 +1,4 @@
 class Game
-  @@all = []
-
-  def self.all
-    @@all
-  end
 
   def welcome
     puts "Are you ready to play? (yes/no)"
@@ -78,6 +73,6 @@ class Game
         else
           exit
         end
-      end
     end
+  end
 end
