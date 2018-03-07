@@ -1,14 +1,20 @@
+require 'pry'
 class Game
+  @@all = []
+
+  def self.all
+    @@all
+  end
 
   def begin
     puts "Are you ready to play? (yes/no)"
   	response = gets.chomp.downcase
   	if response == "yes"
   		puts "Game is on!"
+      binding.pry
   		login
   	elsif response == "no"
   		puts "Fine, call your mommy."
-      exit
   	else
   		puts "Invalid command. Please try again, loser."
 			begin
@@ -18,10 +24,9 @@ class Game
   def login
     puts "Enter your username: "
     username = gets.chomp.downcase
-    if User.all.include?(username)
+    if @@all.include?(username)
       puts "You already exist here. You are now logged in."
-    else
-      username = User.new(username)
+    else @@all << username
       puts "You don't exist yet. We just created you."
     end
     new_move
@@ -39,6 +44,9 @@ class Game
       else
         results
       end
+    elsif @move == "fire"
+      puts "You win everthing."
+      exit
     else
       puts "Invalid command. Learn the game, idiot!"
       new_move
@@ -49,7 +57,10 @@ class Game
     if (@move == "rock" && @computer == "scissors") ||
         (@move == "paper" && @computer == "rock") ||
         (@move == "scissors" && @computer == "paper")
-        puts "You win. \n Play again? (yes/no)"
+        # push result to database
+        puts "You win."
+        # display player's record
+        puts "Play again? (yes/no)"
         response = gets.chomp.downcase
         if response == "yes"
           new_move
@@ -59,14 +70,17 @@ class Game
     elsif (@move == "scissors" && @computer == "rock") ||
         (@move == "paper" && @computer == "scissors") ||
         (@move == "rock" && @computer == "paper")
-        puts "You lost, as expected. Get a life, loser! \n Play again? (yes/no)"
+        # push resul to database
+        puts "You lost, as expected. Get a life, loser!"
+        # display player's record
+        puts "Play again? (yes/no)"
         response = gets.chomp.downcase
         if response == "yes"
           new_move
         else
           exit
         end
+      end
     end
   end
-end
 end
