@@ -49,7 +49,10 @@ def genre_id_helper(name, user)
 end
 
 def genre_seed(arr, user)
-  output = RSpotify::Recommendations.generate(seed_genres: arr)
+  objects = arr.collect do |g|
+    find_genre(g, user).name
+  end
+  output = RSpotify::Recommendations.generate(seed_genres: objects)
   output.tracks.each do |song|
     puts "#{song.artists[0].name} - #{song.name}"
   end
@@ -57,7 +60,10 @@ def genre_seed(arr, user)
 end
 
 def artist_seed(arr, user)
-  output = RSpotify::Recommendations.generate(seed_artists: arr.map{ |a| a.spot_id})
+  id_arr = arr.collect do |a|
+    find_artist(a, user).spot_id
+  end
+  output = RSpotify::Recommendations.generate(seed_artists: id_arr)
   output.tracks.each do |song|
     puts "#{song.artists[0].name} - #{song.name}"
   end
