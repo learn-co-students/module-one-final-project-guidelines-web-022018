@@ -12,5 +12,7 @@ require_relative '../app/models/helper'
 
 RSpotify.authenticate("2bddb2de8f6b4b7792f99cdb8aecbe19", "a5f9a55ab0db42f68a3c02cdab76fb61")
 
+ActiveRecord::Base.logger.level = 1
+
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/development.db')
 require_all 'lib'

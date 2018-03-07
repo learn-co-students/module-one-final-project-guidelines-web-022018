@@ -10,22 +10,25 @@ class User < ActiveRecord::Base
   end
 
   def my_artists
+    puts "~~~"
     self.artists.collect do |a|
-      puts a.name
+      puts "- #{a.name}"
       a.name
     end
   end
 
   def my_genres
+    puts "~~~"
     self.genres.collect do |a|
-      puts a.name
+      puts "- #{a.name}"
       a.name
     end
   end
 
   def my_tracks
+    puts "~~~"
     self.tracks.collect do |a|
-      puts a.name
+      puts "- #{a.name}"
       a.name
     end
   end
