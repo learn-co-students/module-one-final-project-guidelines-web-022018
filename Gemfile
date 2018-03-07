@@ -6,3 +6,5 @@ gem "sqlite3"
 gem "pry"
 gem "require_all"
 gem 'rspotify'
+gem 'colorize', '~> 0.8.1'
+gem 'artii'

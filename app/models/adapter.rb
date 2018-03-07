@@ -52,22 +52,24 @@ class Adapter
     objects = arr.collect do |g|
       find_genre(g, user).name
     end
+    puts "~~~~~~~~~~~~~~~"
     output = RSpotify::Recommendations.generate(seed_genres: objects)
     output.tracks.each do |song|
       puts "#{song.artists[0].name} - #{song.name}"
     end
-    puts nil
+  puts "~~~~~~~~~~~~~~~"
   end
 
   def self.artist_seed(arr, user)
     id_arr = arr.collect do |a|
       find_artist(a, user).spot_id
     end
+    puts "~~~~~~~~~~~~~~~"
     output = RSpotify::Recommendations.generate(seed_artists: id_arr)
     output.tracks.each do |song|
       puts "#{song.artists[0].name} - #{song.name}"
     end
-    puts nil
+    puts "~~~~~~~~~~~~~~~"
   end
 
   def self.track_seed(arr, user)

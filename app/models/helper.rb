@@ -43,7 +43,7 @@ class Helper
         when 'exit'
           break
         else
-          array << input
+          array << input.downcase
       end
     end
   end
