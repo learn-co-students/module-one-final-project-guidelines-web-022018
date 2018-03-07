@@ -50,4 +50,5 @@ loop do
   end
 end
 
+binding.pry
 puts "Goodbye"

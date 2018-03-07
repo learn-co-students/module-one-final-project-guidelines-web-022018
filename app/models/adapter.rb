@@ -50,6 +50,21 @@ class Adapter
     end
   end
 
+  def self.seed_saver(args, user)
+    puts "Would you like to save this seed?"
+    input = gets.chomp.downcase
+    case input
+    when /y/
+      puts "Please enter a name"
+      input = gets.chomp.downcase
+      seed = Seed.new(name: input, seed: args, user_id: user.id)
+      seed.save
+      puts "Saved as #{input}"
+    else
+      return
+    end
+  end
+
   def self.seed(inputs, user)
     args = {}
     if !inputs[:artists].empty?
@@ -74,6 +89,7 @@ class Adapter
       puts "#{song.artists[0].name} - #{song.name}"
     end
     puts "~~~~~~"
+    self.seed_saver(args, user)
   end
 
 end

@@ -10,6 +10,7 @@ require_relative '../app/models/artist'
 require_relative '../app/models/genre'
 require_relative '../app/models/track'
 require_relative '../app/models/user'
+require_relative '../app/models/seed'
 require_relative '../app/models/adapter'
 require_relative '../app/models/helper'
 
