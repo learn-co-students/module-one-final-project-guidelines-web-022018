@@ -2,6 +2,9 @@ require 'bundler'
 Bundler.require
 require 'rspotify'
 require 'pry'
+require 'colorize'
+require 'colorized_string'
+require 'artii'
 
 require_relative '../app/models/artist'
 require_relative '../app/models/genre'

@@ -1,9 +1,10 @@
 require_relative '../config/environment'
 
-binding.pry
-
-puts "Hello, and welcome to Spotpandorify."
-puts "Please enter a username."
+# binding.pry
+a = Artii::Base.new
+puts ColorizedString[a.asciify("Welcome to")].colorize(:light_green)
+puts ColorizedString[a.asciify("Spotpandorify")].colorize(:light_green).blink
+puts ColorizedString["Please enter a username."].colorize(:red)
 user = nil
 loop do
   input = gets.chomp
@@ -11,7 +12,7 @@ loop do
     user = User.find_by(name: input)
     break
   else
-    puts "User not found. Would you like to create a new profile? (Y/N)"
+    puts ColorizedString["User not found. Would you like to create a new profile? (Y/N)"].colorize(:red)
     y_n = gets.chomp.downcase
     case y_n
     when 'y'
@@ -19,12 +20,12 @@ loop do
       user.save
       break
     else
-      puts "Please enter a username."
+      puts ColorizedString["Please enter a username."].colorize(:red)
     end
   end
 end
 loop do
-  puts "Logged in as #{user.name}. Please choose a function. Type 'help' for commands."
+  puts ColorizedString["Logged in as #{user.name}. Please choose a function. Type 'help' for commands."].colorize(:magenta)
   input = gets.chomp
   case input.downcase
   when 'exit'
@@ -38,12 +39,12 @@ loop do
   when /track/
     user.my_tracks
   when 'help'
-    puts 'Recommendation - Enter seeds to create recommendation playlist'
-    puts 'My Artists - Display all artists you have saved to your profile'
-    puts 'My Genres - Display all genres you have saved to your profile'
-    puts 'My Tracks - Display all tracks you have saved to your profile'
-    puts 'Help - This menu'
-    puts 'Exit - Quit the program'
+    puts ColorizedString['Recommendation - Enter seeds to create recommendation playlist'].colorize(:white).on_red
+    puts ColorizedString['My Artists - Display all artists you have saved to your profile'].colorize(:red).on_blue
+    puts ColorizedString['My Genres - Display all genres you have saved to your profile'].colorize(:red).on_blue
+    puts ColorizedString['My Tracks - Display all tracks you have saved to your profile'].colorize(:red).on_blue
+    puts ColorizedString['Help - This menu'].colorize(:white).on_red
+    puts ColorizedString['Exit - Quit the program'].colorize(:white).on_red
   else
     puts "Please enter a valid command"
   end

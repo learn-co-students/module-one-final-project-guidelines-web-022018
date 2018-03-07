@@ -69,11 +69,11 @@ class Adapter
     end
     args[:limit] = inputs[:amount]
     output = RSpotify::Recommendations.generate(args)
-    puts "~~~"
+    puts "~~~~~~"
     output.tracks.each do |song|
       puts "#{song.artists[0].name} - #{song.name}"
     end
-    puts "~~~"
+    puts "~~~~~~"
   end
 
 end
