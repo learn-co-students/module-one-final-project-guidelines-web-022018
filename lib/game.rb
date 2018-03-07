@@ -11,7 +11,6 @@ class Game
   	response = gets.chomp.downcase
   	if response == "yes"
   		puts "Game is on!"
-      binding.pry
   		login
   	elsif response == "no"
   		puts "Fine, call your mommy."
