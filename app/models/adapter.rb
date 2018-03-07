@@ -48,33 +48,29 @@ class Adapter
     end
   end
 
-  def self.genre_seed(arr, user)
-    objects = arr.collect do |g|
-      find_genre(g, user).name
+  def self.seed(inputs, user)
+    args = {}
+    if !inputs[:artists].empty?
+      id_arr = inputs[:artists].collect do |a|
+        find_artist(a, user).spot_id
+      end
+      args[:seed_artists] = id_arr
     end
-    output = RSpotify::Recommendations.generate(seed_genres: objects)
+    if !inputs[:genres].empty?
+      args[:seed_genres] = inputs[:genres]
+    end
+    if !inputs[:tracks].empty?
+      id_arr = inputs[:artists].collect do |t|
+        find_track(t, user).spot_id
+      end
+      args[:seed_tracks] = id_arr
+    end
+    args[:limit] = inputs[:amount]
+    output = RSpotify::Recommendations.generate(args)
     output.tracks.each do |song|
       puts "#{song.artists[0].name} - #{song.name}"
     end
-    puts nil
+    nil
   end
 
-  def self.artist_seed(arr, user)
-    id_arr = arr.collect do |a|
-      find_artist(a, user).spot_id
-    end
-    output = RSpotify::Recommendations.generate(seed_artists: id_arr)
-    output.tracks.each do |song|
-      puts "#{song.artists[0].name} - #{song.name}"
-    end
-    puts nil
-  end
-
-  def self.track_seed(arr, user)
-    output = RSpotify::Recommendations.generate(seed_tracks: arr.map{ |t| t.spot_id})
-    output.tracks.each do |song|
-      puts "#{song.artists[0].name} - #{song.name}"
-    end
-    puts nil
-  end
 end

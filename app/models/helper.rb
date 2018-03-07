@@ -26,25 +26,41 @@ class Helper
     end
   end
 
-  def self.generic_seed(type, user)
-    array = []
+  def self.get_input(type)
+    output = []
     loop do
       puts "Please enter #{type} name."
-      puts "Type 'done' to continue or 'exit' to return to the menu."
+      puts "Type 'next' to continue."
       input = gets.chomp
-      case input.downcase
-        when 'done'
-          if array.length >= 1
-            Adapter.send("#{type}_seed".to_sym, array, user)
-            break
-          else
-            puts "You need to enter at least one #{type} to continue."
-          end
-        when 'exit'
-          break
-        else
-          array << input
+      case input
+      when 'next'
+        break
+      else
+        output << input.downcase
       end
     end
+    output
   end
+
+  def self.get_amount
+    puts "How many songs should I give you?"
+    input = gets.chomp
+    begin
+      Integer(input)
+    rescue
+      puts "Not a number"
+      input = 30
+    end
+    input
+  end
+
+  def self.all_seed(user)
+    args = {artists: [], genres: [], tracks: [], amount: 30}
+    args[:artists] = self.get_input('artist')
+    args[:genres] = self.get_input('genre')
+    args[:tracks] = self.get_input('track')
+    args[:amount] = self.get_amount
+    Adapter.seed(args, user)
+  end
+
 end

@@ -17,13 +17,13 @@ loop do
   case input.downcase
   when 'exit'
     break
-  when 'recommendation'
-    Helper.recommendation(user)
-  when 'my artists'
+  when /recommend/
+    Helper.all_seed(user)
+  when /artist/
     user.my_artists
-  when 'my genres'
+  when /genre/
     user.my_genres
-  when 'my tracks'
+  when /track/
     user.my_tracks
   when 'help'
     puts 'Recommendation - Enter seeds to create recommendation playlist'
