@@ -72,6 +72,7 @@ class Adapter
       puts "#{song.artists[0].name} - #{song.name}"
     end
     puts "~~~~~~"
+    puts "Go here to convert your playlist: http://www.playlist-converter.net/#/"
   end
 
   def self.seed_format(inputs, user)
