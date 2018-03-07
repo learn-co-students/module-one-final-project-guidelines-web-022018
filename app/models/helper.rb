@@ -72,7 +72,7 @@ class Helper
       return
     end
     args[:amount] = self.get_amount
-    Adapter.seed(args, user)
+    Adapter.seed_format(args, user)
   end
 
 end

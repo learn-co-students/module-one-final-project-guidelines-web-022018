@@ -10,6 +10,40 @@ class User < ActiveRecord::Base
     end
   end
 
+  def my_seeds
+    puts "~~~"
+    self.seeds.each do |s|
+      puts "Name: #{s.name}"
+      if s.seed[:seed_artists]
+        puts "  Artists:"
+        s.seed[:seed_artists].each do |x|
+          puts "    #{Artist.find_by(spot_id: x).name}"
+        end
+      end
+      if s.seed[:seed_genres]
+        puts "  Genres:"
+        s.seed[:seed_genres].each do |x|
+          puts "    #{x}"
+        end
+      end
+      if s.seed[:seed_tracks]
+        puts "  Tracks:"
+        s.seed[:seed_tracks].each do |x|
+          puts "    #{Track.find_by(spot_id: x).name}"
+        end
+      end
+      puts "~~~"
+    end
+  end
+
+  def seed_titles
+    puts "~~~"
+    self.seeds.each do |s|
+      puts s.name
+    end
+    puts "~~~"
+  end
+
   def my_artists
     puts "~~~"
     self.artists.collect do |a|

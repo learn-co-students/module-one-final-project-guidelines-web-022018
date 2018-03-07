@@ -65,7 +65,16 @@ class Adapter
     end
   end
 
-  def self.seed(inputs, user)
+  def self.return_playlist(args, user)
+    output = RSpotify::Recommendations.generate(args)
+    puts "~~~~~~"
+    output.tracks.each do |song|
+      puts "#{song.artists[0].name} - #{song.name}"
+    end
+    puts "~~~~~~"
+  end
+
+  def self.seed_format(inputs, user)
     args = {}
     if !inputs[:artists].empty?
       id_arr = inputs[:artists].collect do |a|
@@ -83,12 +92,7 @@ class Adapter
       args[:seed_tracks] = id_arr
     end
     args[:limit] = inputs[:amount]
-    output = RSpotify::Recommendations.generate(args)
-    puts "~~~~~~"
-    output.tracks.each do |song|
-      puts "#{song.artists[0].name} - #{song.name}"
-    end
-    puts "~~~~~~"
+    self.return_playlist(args, user)
     self.seed_saver(args, user)
   end
 

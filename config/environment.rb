@@ -13,6 +13,7 @@ require_relative '../app/models/user'
 require_relative '../app/models/seed'
 require_relative '../app/models/adapter'
 require_relative '../app/models/helper'
+require_relative '../app/models/playlist_helper'
 
 RSpotify.authenticate("2bddb2de8f6b4b7792f99cdb8aecbe19", "a5f9a55ab0db42f68a3c02cdab76fb61")
 

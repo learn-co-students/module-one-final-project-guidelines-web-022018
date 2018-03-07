@@ -38,6 +38,12 @@ loop do
     user.my_genres
   when /track/
     user.my_tracks
+  when /playlist/
+    if user.seeds.empty?
+      puts "No playlists saved"
+    else
+      PlaylistHelper.select_function(user)
+    end
   when 'help'
     puts ColorizedString['Recommendation - Enter seeds to create recommendation playlist'].colorize(:white).on_red
     puts ColorizedString['My Artists - Display all artists you have saved to your profile'].colorize(:red).on_blue
@@ -50,5 +56,4 @@ loop do
   end
 end
 
-binding.pry
 puts "Goodbye"
