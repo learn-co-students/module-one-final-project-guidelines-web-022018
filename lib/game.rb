@@ -1,36 +1,28 @@
 class Game
-  @@all = []
-
-  def self.all
-    @@all
-  end
 
   def begin
     puts "Are you ready to play? (yes/no)"
   	response = gets.chomp.downcase
   	if response == "yes"
   		puts "Game is on!"
-  		"Game is on!"
   		login
   	elsif response == "no"
   		puts "Fine, call your mommy."
-  		"Fine, call your mommy."
+      exit
   	else
-  		puts "Invalid command. Please try again, loser." # this works!
-			welcome  # this works!
+  		puts "Invalid command. Please try again, loser."
+			begin
   	end
   end
 
   def login
     puts "Enter your username: "
     username = gets.chomp.downcase
-    if @@all.include?(username)
+    if User.all.include?(username)
       puts "You already exist here. You are now logged in."
-      "You already exist here. You are now logged in."
-    else @@all << username
-      #username = User.new(username)
-      puts "You don't exist yet. User created."
-      "You don't exist yet. User created."
+    else
+      username = User.new(username)
+      puts "You don't exist yet. We just created you."
     end
     new_move
   end
@@ -76,4 +68,5 @@ class Game
         end
     end
   end
+end
 end
