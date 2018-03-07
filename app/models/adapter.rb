@@ -4,6 +4,9 @@ class Adapter
     artists = Artist.arel_table
     if Artist.where(artists[:name].matches(name)).empty?
       artist = RSpotify::Artist.search(name)[0]
+      if artist.nil?
+        return nil
+      end
       output = Artist.new(name: artist.name, spot_id: artist.id)
       output.save
       user.artists << output
@@ -18,6 +21,9 @@ class Adapter
     tracks = Track.arel_table
     if Track.where(tracks[:name].matches(name)).empty?
       track = RSpotify::Track.search(name)[0]
+      if track.nil?
+        return nil
+      end
       output = Track.new(name: track.name, spot_id: track.id, artist_id: find_artist(track.artists[0].name, user).id, genre_id: genre_id_helper(track.artists[0].name, user))
       output.save
       user.tracks << output
@@ -77,22 +83,28 @@ class Adapter
 
   def self.seed_format(inputs, user)
     args = {}
-    if !inputs[:artists].empty?
-      id_arr = inputs[:artists].collect do |a|
-        find_artist(a, user).spot_id
+    begin
+      if !inputs[:artists].empty?
+        id_arr = inputs[:artists].collect do |a|
+          find_artist(a, user).spot_id
+        end
+        args[:seed_artists] = id_arr
       end
-      args[:seed_artists] = id_arr
-    end
-    if !inputs[:genres].empty?
-      args[:seed_genres] = inputs[:genres]
-    end
-    if !inputs[:tracks].empty?
-      id_arr = inputs[:artists].collect do |t|
-        find_track(t, user).spot_id
+      if !inputs[:genres].empty?
+        args[:seed_genres] = inputs[:genres]
       end
-      args[:seed_tracks] = id_arr
+      if !inputs[:tracks].empty?
+        id_arr = inputs[:artists].collect do |t|
+          find_track(t, user).spot_id
+        end
+        args[:seed_tracks] = id_arr
+      end
+      args[:limit] = inputs[:amount]
+    rescue
+      puts "~~ Your query could not be found ~~"
+      puts "You may have misspelled title, or that content might not exist on Spotify."
+      return
     end
-    args[:limit] = inputs[:amount]
     self.return_playlist(args, user)
     self.seed_saver(args, user)
   end

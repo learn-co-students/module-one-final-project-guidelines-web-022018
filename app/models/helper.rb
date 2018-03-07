@@ -54,6 +54,9 @@ class Helper
       puts "Not a number"
       input = 30
     end
+    if input.to_i > 100
+      input = 100
+    end
     input
   end
 
