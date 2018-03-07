@@ -46,8 +46,8 @@ loop do
     puts ColorizedString['Help - This menu'].colorize(:white).on_red
     puts ColorizedString['Exit - Quit the program'].colorize(:white).on_red
   else
-    puts "Please enter a valid command"
+    puts "Please enter a valid command".blink
   end
 end
 
-puts "Goodbye"
+puts ColorizedString["Goodbye!"].colorize(:red)
