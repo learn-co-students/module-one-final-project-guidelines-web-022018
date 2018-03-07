@@ -1,15 +1,27 @@
 require_relative '../config/environment'
 
-# binding.pry
+binding.pry
 
 puts "Hello, and welcome to Spotpandorify."
 puts "Please enter a username."
-input = gets.chomp
-if User.all_users.include? input
-  user = User.find_by(name: input)
-else
-  user = User.create(name: input)
-  user.save
+user = nil
+loop do
+  input = gets.chomp
+  if User.all_users.include? input
+    user = User.find_by(name: input)
+    break
+  else
+    puts "User not found. Would you like to create a new profile? (Y/N)"
+    y_n = gets.chomp.downcase
+    case y_n
+    when 'y'
+      user = User.create(name: input)
+      user.save
+      break
+    else
+      puts "Please enter a username."
+    end
+  end
 end
 loop do
   puts "Logged in as #{user.name}. Please choose a function. Type 'help' for commands."

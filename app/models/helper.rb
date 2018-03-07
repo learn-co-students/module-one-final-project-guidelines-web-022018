@@ -30,10 +30,13 @@ class Helper
     output = []
     loop do
       puts "Please enter #{type} name."
-      puts "Type 'next' to continue."
+      puts "Type 'next' to continue. Or exit to return "
       input = gets.chomp
       case input
       when 'next'
+        break
+      when 'exit'
+        output = nil
         break
       else
         output << input.downcase
@@ -57,8 +60,17 @@ class Helper
   def self.all_seed(user)
     args = {artists: [], genres: [], tracks: [], amount: 30}
     args[:artists] = self.get_input('artist')
+    return if !args[:artists]
     args[:genres] = self.get_input('genre')
+    return if !args[:genres]
     args[:tracks] = self.get_input('track')
+    return if !args[:tracks]
+    if args[:artists].empty? && args[:genres].empty? && args[:tracks].empty?
+      puts "~~~"
+      puts "Silence - Silence"
+      puts "~~~"
+      return
+    end
     args[:amount] = self.get_amount
     Adapter.seed(args, user)
   end

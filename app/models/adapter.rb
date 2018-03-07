@@ -1,7 +1,8 @@
 class Adapter
 
   def self.find_artist(name, user)
-    if !Artist.find_by(name: name)
+    artists = Artist.arel_table
+    if Artist.where(artists[:name].matches(name)).empty?
       artist = RSpotify::Artist.search(name)[0]
       output = Artist.new(name: artist.name, spot_id: artist.id)
       output.save
@@ -9,12 +10,13 @@ class Adapter
       user.save
       return output
     else
-      return Artist.find_by(name: name)
+      return Artist.where(artists[:name].matches(name))[0]
     end
   end
 
   def self.find_track(name, user)
-    if !Track.find_by(name: name)
+    tracks = Track.arel_table
+    if Track.where(tracks[:name].matches(name)).empty?
       track = RSpotify::Track.search(name)[0]
       output = Track.new(name: track.name, spot_id: track.id, artist_id: find_artist(track.artists[0].name, user).id, genre_id: genre_id_helper(track.artists[0].name, user))
       output.save
@@ -22,7 +24,7 @@ class Adapter
       user.save
       return output
     else
-      return Track.find_by(name: name)
+      return Track.where(tracks[:name].matches(name))[0]
     end
   end
 
@@ -67,10 +69,11 @@ class Adapter
     end
     args[:limit] = inputs[:amount]
     output = RSpotify::Recommendations.generate(args)
+    puts "~~~"
     output.tracks.each do |song|
       puts "#{song.artists[0].name} - #{song.name}"
     end
-    nil
+    puts "~~~"
   end
 
 end
