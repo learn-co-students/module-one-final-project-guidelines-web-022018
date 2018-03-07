@@ -3,6 +3,12 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :artists
   has_and_belongs_to_many :genres
 
+  def self.all_users
+    self.all.collect do |u|
+      u.name
+    end
+  end
+
   def my_artists
     self.artists.collect do |a|
       puts a.name
@@ -23,5 +29,5 @@ class User < ActiveRecord::Base
       a.name
     end
   end
-  
+
 end
