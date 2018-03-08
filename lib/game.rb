@@ -72,7 +72,7 @@ class Game
       puts "#{user.wins} wins and #{user.losses} losses."
       delete
     elsif answer == "no"
-      puts "Bye. See you never"
+      puts "Go away, don't come back!"
       exit
     else
       puts "Invalid command. Learn to read."
@@ -86,9 +86,9 @@ class Game
     if response == "yes"
       user = find_user
       user.delete
-      puts "Bye. See you never"
+      puts "Alright, see you never!"
     elsif response == "no"
-      puts "Bye. See you never"
+      puts "Peace."
       exit
     else
       puts "Invalid command. Learn to read."
