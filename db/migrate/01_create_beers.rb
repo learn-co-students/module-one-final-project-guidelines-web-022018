@@ -1,4 +1,4 @@
-class CreateBeers < ActiveRecord::Migration[5.1]
+class CreateBeers < ActiveRecord::Migration[4.2]
   def change
     create_table :beers do |t|
       t.string :beername
