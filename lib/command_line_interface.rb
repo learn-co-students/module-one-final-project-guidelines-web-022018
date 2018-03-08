@@ -12,11 +12,13 @@ end
 
 def get_preferences(user)
   choices = {"1" => "Alcohol Content",
-  "2" => "Color",
-  "3" => "Opacity",
+  "2" => "Darkness",
+  "3" => "Clarity",
+  "4" => "Bitterness"
   "Alcohol Content" => "abv",
-  "Color" => "srm",
-  "Opacity" => "ibu"
+  "Darkness" => "srm",
+  "Clarity" => "ebc"
+  "Bitterness" => "ibu"
 }
   levels = {"1" => "Low",
     "2" => "Medium",
@@ -26,7 +28,7 @@ def get_preferences(user)
     "High" => "high"
 }
   if user.id == User.last.id
-    puts "Please choose your preferences from the following options: \n1: Alcohol Content \n2: Darkness \n3: Clarity"
+    puts "Please choose your preferences from the following options: \n1: Alcohol Content \n2: Darkness \n3: Clarity \n4: Bitterness"
     attribute = gets.chomp
     while choices.keys.include?(attribute)
       "Please type 1, 2, or 3 and press return."
@@ -40,7 +42,7 @@ def get_preferences(user)
     end
   else
     puts "Welcome back, #{user.name}!"
-    puts "Please choose your preferences from the following options:  \n1: Alcohol Content \n2: Darkness \n3: Clarity"
+    puts "Please choose your preferences from the following options:  \n1: Alcohol Content \n2: Darkness \n3: Clarity \n4: Bitterness"
     attribute = gets.chomp
     while choices.keys.include?(attribute)
       "Please type 1, 2, or 3 and press return."
@@ -53,4 +55,4 @@ def get_preferences(user)
     end
   end
 end
-end 
+end
