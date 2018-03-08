@@ -3,7 +3,7 @@ require_relative '../config/environment'
 # binding.pry
 a = Artii::Base.new
 puts ColorizedString[a.asciify("Welcome to")].colorize(:light_green)
-puts ColorizedString[a.asciify("Spotpandorify")].colorize(:light_green).blink
+puts ColorizedString[a.asciify("SpotRec")].colorize(:light_green).blink
 puts ColorizedString["Please enter a username."].colorize(:red)
 user = nil
 loop do
@@ -17,7 +17,6 @@ loop do
     case y_n
     when 'y'
       user = User.create(name: input)
-      user.save
       break
     else
       puts ColorizedString["Please enter a username."].colorize(:red)
@@ -46,6 +45,7 @@ loop do
     end
   when 'help'
     puts ColorizedString['Recommendation - Enter seeds to create recommendation playlist'].colorize(:white).on_red
+    puts ColorizedString['Playlist - View, load and modify saved playlist seeds'].colorize(:white).on_red
     puts ColorizedString['My Artists - Display all artists you have saved to your profile'].colorize(:red).on_blue
     puts ColorizedString['My Genres - Display all genres you have saved to your profile'].colorize(:red).on_blue
     puts ColorizedString['My Tracks - Display all tracks you have saved to your profile'].colorize(:red).on_blue

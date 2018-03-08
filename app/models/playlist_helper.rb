@@ -25,16 +25,25 @@ class PlaylistHelper
       case input
       when /arti/
         arr = Helper.get_input('artist')
+        if arr.nil?
+          return
+        end
         arr.each do |x|
           selection.seed[:seed_artists] << Adapter.find_artist(x, user).spot_id
         end
       when /gen/
         arr = Helper.get_input('genre')
+        if arr.nil?
+          return
+        end
         arr.each do |x|
           selection.seed[:seed_genres] << x
         end
       when /tra/
         arr = Helper.get_input('track')
+        if arr.nil?
+          return
+        end
         arr.each do |x|
           selection.seed[:seed_tracks] << Adapter.find_track(x, user).spot_id
         end

@@ -7,8 +7,7 @@ class Adapter
       if artist.nil?
         return nil
       end
-      output = Artist.new(name: artist.name, spot_id: artist.id)
-      output.save
+      output = Artist.create(name: artist.name, spot_id: artist.id)
       user.artists << output
       user.save
       return output
@@ -63,8 +62,7 @@ class Adapter
     when /y/
       puts "Please enter a name"
       input = gets.chomp.downcase
-      seed = Seed.new(name: input, seed: args, user_id: user.id)
-      seed.save
+      seed = Seed.create(name: input, seed: args, user_id: user.id)
       puts "Saved as #{input}"
     else
       return
