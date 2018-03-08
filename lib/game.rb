@@ -17,9 +17,9 @@ class Game
   def login
     puts "Enter your username: "
     @username = gets.chomp.downcase
-    if Player.all.include?(@username)
+    if find_user
       puts "You already exist here. You are now logged in."
-    else @username = Player.new(@username)
+    else Player.new(@username)
       puts "You don't exist yet. We just created you."
     end
     new_move
@@ -57,10 +57,42 @@ class Game
     if response == "yes"
       new_move
     elsif response == "no"
-      exit
+      view_score
     else
       puts "Invalid command. Learn the game, idiot! Play again? (yes/no)"
       prompt
+    end
+  end
+
+  def view_score
+    puts "Would you like to see your score? (yes/no)"
+    answer = gets.chomp.downcase
+    if answer == "yes"
+      user = find_user
+      puts "#{user.wins} wins and #{user.losses} losses."
+      delete
+    elsif answer == "no"
+      puts "Bye. See you never"
+      exit
+    else
+      puts "Invalid command. Learn to read."
+      view_score
+    end
+  end
+
+  def delete
+    puts "Feeling depressed with your crappy score? Delete yourself. (yes/no)"
+    response = gets.chomp.downcase
+    if response == "yes"
+      user = find_user
+      user.delete
+      puts "Bye. See you never"
+    elsif response == "no"
+      puts "Bye. See you never"
+      exit
+    else
+      puts "Invalid command. Learn to read."
+      delete
     end
   end
 
@@ -68,15 +100,31 @@ class Game
     if (@move == "rock" && @computer == "scissors") ||
         (@move == "paper" && @computer == "rock") ||
         (@move == "scissors" && @computer == "paper")
-        @username.wins += 1
+        update_wins
         puts "You win. Play again? (yes/no)"
         prompt
     elsif (@move == "scissors" && @computer == "rock") ||
         (@move == "paper" && @computer == "scissors") ||
         (@move == "rock" && @computer == "paper")
-        @username.losses += 1
+        update_losses
         puts "You lost, as expected. Get a life, loser!\nOr perhaps play again? (yes/no)"
         prompt
     end
+  end
+
+  def find_user
+    User.find_by(username: @username)
+  end
+
+  def update_wins
+    user = find_user
+    user.wins += 1
+    user.save
+  end
+
+  def update_losses
+    user = find_user
+    user.losses += 1
+    user.save
   end
 end
