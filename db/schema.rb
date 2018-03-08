@@ -13,10 +13,24 @@
 ActiveRecord::Schema.define(version: 4) do
 
   create_table "beers", force: :cascade do |t|
-    t.string "beername"
-    t.string "abv"
-    t.string "ibu"
-    t.string "srm"
+    t.integer "apiid"
+    t.string  "beername"
+    t.string  "tagline"
+    t.string  "description"
+    t.integer "abv"
+    t.integer "ibu"
+    t.integer "target_fg"
+    t.integer "target_og"
+    t.integer "srm"
+    t.integer "ph"
+    t.integer "attenuation_level"
+    t.string  "volume"
+    t.string  "boil_volume"
+    t.string  "method"
+    t.string  "ingredients"
+    t.string  "food_pairing"
+    t.string  "brewers_tips"
+    t.string  "contributed_by"
   end
 
   create_table "favorites", force: :cascade do |t|
