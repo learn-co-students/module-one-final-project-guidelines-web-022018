@@ -61,21 +61,15 @@ class Helper
   end
 
   def self.all_seed(user)
-    args = {artists: [], genres: [], tracks: [], amount: 30}
+    args = {artists: [], genres: [], tracks: []}
     args[:artists] = self.get_input('artist')
     return if !args[:artists]
     args[:genres] = self.get_input('genre')
     return if !args[:genres]
     args[:tracks] = self.get_input('track')
     return if !args[:tracks]
-    if args[:artists].empty? && args[:genres].empty? && args[:tracks].empty?
-      puts "~~~"
-      puts "Silence - Silence"
-      puts "~~~"
-      return
-    end
-    args[:amount] = self.get_amount
-    Adapter.seed_format(args, user)
+    amount = self.get_amount
+    Adapter.seed_format(args, amount, user)
   end
 
 end

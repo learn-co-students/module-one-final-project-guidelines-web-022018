@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180307185315) do
+ActiveRecord::Schema.define(version: 20180308144225) do
 
   create_table "artists", force: :cascade do |t|
     t.string "name"
@@ -46,6 +46,12 @@ ActiveRecord::Schema.define(version: 20180307185315) do
     t.integer "artist_id"
     t.integer "genre_id"
     t.string  "spot_id"
+    t.float   "acousticness"
+    t.float   "danceability"
+    t.float   "energy"
+    t.float   "instrumentalness"
+    t.float   "valence"
+    t.float   "tempo"
   end
 
   create_table "tracks_users", id: false, force: :cascade do |t|

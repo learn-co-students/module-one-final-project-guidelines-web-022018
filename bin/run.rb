@@ -1,6 +1,6 @@
 require_relative '../config/environment'
 
-# binding.pry
+binding.pry
 a = Artii::Base.new
 puts ColorizedString[a.asciify("Welcome to")].colorize(:light_green)
 puts ColorizedString[a.asciify("SpotRec")].colorize(:light_green).blink

@@ -29,7 +29,12 @@ class PlaylistHelper
           return
         end
         arr.each do |x|
-          selection.seed[:seed_artists] << Adapter.find_artist(x, user).spot_id
+          begin
+            out = Adapter.find_artist(x, user)[1]
+          rescue
+            puts "Couldn't find result for #{x}"
+          end
+          selection.seed[:seed_artists] << out
         end
       when /gen/
         arr = Helper.get_input('genre')
@@ -45,7 +50,11 @@ class PlaylistHelper
           return
         end
         arr.each do |x|
-          selection.seed[:seed_tracks] << Adapter.find_track(x, user).spot_id
+          begin
+            selection.seed[:seed_tracks] << Adapter.find_track(x, user)[1]
+          rescue
+            puts "Couldn't find result for #{x}"
+          end
         end
       when /exit/
         break

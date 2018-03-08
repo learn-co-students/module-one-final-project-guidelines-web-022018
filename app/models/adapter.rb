@@ -10,10 +10,10 @@ class Adapter
       output = Artist.create(name: artist.name, spot_id: artist.id)
       user.artists << output
       user.save
-      return output
     else
-      return Artist.where(artists[:name].matches(name))[0]
+      output = Artist.where(artists[:name].matches(name))[0]
     end
+    return [output, output.spot_id]
   end
 
   def self.find_track(name, user)
@@ -23,14 +23,23 @@ class Adapter
       if track.nil?
         return nil
       end
-      output = Track.new(name: track.name, spot_id: track.id, artist_id: find_artist(track.artists[0].name, user).id, genre_id: genre_id_helper(track.artists[0].name, user))
-      output.save
+      artist = find_artist(track.artists[0].name, user)[0]
+      output = Track.create(name: track.name,
+        spot_id: track.id,
+        artist_id: artist.id,
+        genre_id: genre_id_helper(artist, user),
+        acousticness: track.audio_features.acousticness,
+        danceability: track.audio_features.danceability,
+        energy: track.audio_features.energy,
+        instrumentalness: track.audio_features.instrumentalness,
+        valence: track.audio_features.valence,
+        tempo: track.audio_features.tempo,)
       user.tracks << output
       user.save
-      return output
     else
-      return Track.where(tracks[:name].matches(name))[0]
+      output = Track.where(tracks[:name].matches(name))[0]
     end
+    return [output, output.spot_id]
   end
 
   def self.find_genre(name, user)
@@ -39,16 +48,16 @@ class Adapter
       genre.save
       user.genres << genre
       user.save
-      return genre
     else
-      return Genre.find_by(name: name)
+      genre = Genre.find_by(name: name)
     end
+    return [genre, genre.name]
   end
 
-  def self.genre_id_helper(name, user)
-    genre = RSpotify::Artist.search(name)[0].genres[0]
+  def self.genre_id_helper(artist, user)
+    genre = RSpotify::Artist.search(artist.name)[0].genres[0]
     if !genre.nil?
-      output = find_genre(genre, user)
+      output = find_genre(genre, user)[0]
       output.id
     else
       nil
@@ -70,6 +79,7 @@ class Adapter
   end
 
   def self.return_playlist(args, user)
+    binding.pry
     output = RSpotify::Recommendations.generate(args)
     puts "~~~~~~"
     output.tracks.each do |song|
@@ -79,32 +89,26 @@ class Adapter
     puts "Go here to convert your playlist: http://www.playlist-converter.net/#/"
   end
 
-  def self.seed_format(inputs, user)
-    args = {}
-    begin
-      if !inputs[:artists].empty?
-        id_arr = inputs[:artists].collect do |a|
-          find_artist(a, user).spot_id
+  def self.seed_format(inputs, amount, user)
+    args = {limit: amount.to_i}
+    inputs.each do |hash, key|
+      arg_arr = []
+      key.each do |k|
+        begin
+          filtered = self.send("find_#{hash.to_s.singularize}".to_sym, k, user)
+          arg_arr << filtered[1]
+        rescue
+          puts "Couldn't find #{hash} query #{k}"
         end
-        args[:seed_artists] = id_arr
       end
-      if !inputs[:genres].empty?
-        args[:seed_genres] = inputs[:genres]
-      end
-      if !inputs[:tracks].empty?
-        id_arr = inputs[:artists].collect do |t|
-          find_track(t, user).spot_id
-        end
-        args[:seed_tracks] = id_arr
-      end
-      args[:limit] = inputs[:amount]
-    rescue
-      puts "~~ Your query could not be found ~~"
-      puts "You may have misspelled title, or that content might not exist on Spotify."
-      return
+      args["seed_#{hash}".to_sym] = arg_arr
     end
-    self.return_playlist(args, user)
-    self.seed_saver(args, user)
+    begin
+      self.return_playlist(args, user)
+      self.seed_saver(args, user)
+    rescue
+      puts "Sorry, playlist generation failed."
+      puts "Perhaps your seed was too specific?"
+    end
   end
-
 end
