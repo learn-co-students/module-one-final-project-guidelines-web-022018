@@ -1,20 +1,18 @@
 class PlaylistHelper
   def self.choose_playlist(user)
-    output = nil
     loop do
       puts "Please choose a playlist:"
       user.seed_titles
       input = gets.chomp.downcase
       if user.seeds.find_by(name: input)
         output = user.seeds.find_by(name: input)
-        return output
+        select_function(output, user)
       elsif input == "exit"
         break
       else
         puts "Please enter a valid playlist"
       end
     end
-    output
   end
 
   def self.add_input(selection, type, user)
@@ -51,8 +49,7 @@ class PlaylistHelper
     selection.save
   end
 
-  def self.select_function(user)
-    selection = self.choose_playlist(user)
+  def self.select_function(selection, user)
     loop do
       puts "Please choose a function."
       puts "Add, Display, Delete, Load, Exit"
@@ -61,11 +58,11 @@ class PlaylistHelper
       when /add/
         self.add_selection(selection, user)
       when /disp/
-        puts "#{selection.name}:"
+        puts ColorizedString["\n#{selection.name}:"].colorize(:black).on_white
         selection.objects.each do |k, v|
           out = k.to_s
           out.slice! "seed_"
-          puts "  #{out}"
+          puts ColorizedString["\n  #{out}:"].colorize(:black).on_white
           v.each do |val|
             puts "    #{val.name}"
           end

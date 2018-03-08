@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20180308193044) do
   end
 
   create_table "artists_users", id: false, force: :cascade do |t|
-    t.integer "user_id",   null: false
+    t.integer "user_id", null: false
     t.integer "artist_id", null: false
     t.index ["artist_id"], name: "index_artists_users_on_artist_id"
     t.index ["user_id"], name: "index_artists_users_on_user_id"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20180308193044) do
   end
 
   create_table "genres_users", id: false, force: :cascade do |t|
-    t.integer "user_id",  null: false
+    t.integer "user_id", null: false
     t.integer "genre_id", null: false
     t.index ["genre_id"], name: "index_genres_users_on_genre_id"
     t.index ["user_id"], name: "index_genres_users_on_user_id"
@@ -37,26 +37,26 @@ ActiveRecord::Schema.define(version: 20180308193044) do
 
   create_table "seeds", force: :cascade do |t|
     t.integer "user_id"
-    t.string  "name"
-    t.text    "seed"
-    t.text    "objects"
+    t.string "name"
+    t.text "seed"
+    t.text "objects"
   end
 
   create_table "tracks", force: :cascade do |t|
-    t.string  "name"
+    t.string "name"
     t.integer "artist_id"
     t.integer "genre_id"
-    t.string  "spot_id"
-    t.float   "acousticness"
-    t.float   "danceability"
-    t.float   "energy"
-    t.float   "instrumentalness"
-    t.float   "valence"
-    t.float   "tempo"
+    t.string "spot_id"
+    t.float "acousticness"
+    t.float "danceability"
+    t.float "energy"
+    t.float "instrumentalness"
+    t.float "valence"
+    t.float "tempo"
   end
 
   create_table "tracks_users", id: false, force: :cascade do |t|
-    t.integer "user_id",  null: false
+    t.integer "user_id", null: false
     t.integer "track_id", null: false
     t.index ["track_id"], name: "index_tracks_users_on_track_id"
     t.index ["user_id"], name: "index_tracks_users_on_user_id"

@@ -1,32 +1,13 @@
 class Helper
-  def self.runtime(user)
-    loop do
-      puts "Logged in as #{user}. Please choose a function. Type 'help' for commands."
-      input = gets.chomp
-      case input.downcase
-      when 'exit'
-        break
-      when 'recommendation'
-        self.recommendation
-      end
-    end
+
+  attr_reader :user
+  attr_accessor :args, :inputs
+
+  def initialize(user)
+    @user = user
   end
 
-  def self.recommendation(user)
-    puts 'I will generate suggestions based on your input.'
-    puts 'Choose Artist, Genre, or Track.'
-    input = gets.chomp
-    case input.downcase
-    when 'artist'
-      self.generic_seed('artist', user)
-    when 'genre'
-      self.generic_seed('genre', user)
-    when 'track'
-      self.generic_seed('track', user)
-    end
-  end
-
-  def self.get_input(type)
+  def get_input(type)
     output = []
     loop do
       puts "Please enter #{type} name."
@@ -45,7 +26,7 @@ class Helper
     output
   end
 
-  def self.get_amount
+  def get_amount
     puts "How many songs should I give you?"
     input = gets.chomp
     begin
@@ -60,15 +41,15 @@ class Helper
     input
   end
 
-  def self.all_seed(user)
+  def all_seed
     args = {artists: [], genres: [], tracks: []}
-    args[:artists] = self.get_input('artist')
+    args[:artists] = get_input('artist')
     return if !args[:artists]
-    args[:genres] = self.get_input('genre')
+    args[:genres] = get_input('genre')
     return if !args[:genres]
-    args[:tracks] = self.get_input('track')
+    args[:tracks] = get_input('track')
     return if !args[:tracks]
-    amount = self.get_amount
+    amount = get_amount
     return Adapter.seed_format(args, amount, user)
   end
 

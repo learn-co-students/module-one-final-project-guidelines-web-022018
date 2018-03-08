@@ -86,12 +86,8 @@ class Adapter
       list = ("\n#{song.artists[0].name} - #{song.name}")
       colorizer.write(list)
     end
-<<<<<<< HEAD
     puts "\n~~~~~~"
-=======
-    puts "~~~~~~"
     puts "Go here to convert your playlist: http://www.playlist-converter.net/#/"
->>>>>>> master
   end
 
   def self.seed_format(inputs, amount, user)
