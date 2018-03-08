@@ -17,16 +17,16 @@ class Game
   def login
     puts "Enter your username: "
     @username = gets.chomp.downcase
-    if User.all.include?(@username)
+    if Player.all.include?(@username)
       puts "You already exist here. You are now logged in."
-    else @username = User.new(@username)
+    else @username = Player.new(@username)
       puts "You don't exist yet. We just created you."
     end
     new_move
   end
 
   def new_move
-		puts "Enter your move:  "
+		puts "Enter your move: (rock/paper/scissors)"
 		puts "Your move: #{@move = gets.chomp.downcase}"
     @computer = ['rock', 'paper', 'scissors'].sample
     if ['rock', 'paper', 'scissors'].include?(@move)
@@ -52,27 +52,31 @@ class Game
     end
 	end
 
+  def prompt
+    response = gets.chomp.downcase
+    if response == "yes"
+      new_move
+    elsif response == "no"
+      exit
+    else
+      puts "Invalid command. Learn the game, idiot! Play again? (yes/no)"
+      prompt
+    end
+  end
+
   def results
     if (@move == "rock" && @computer == "scissors") ||
         (@move == "paper" && @computer == "rock") ||
         (@move == "scissors" && @computer == "paper")
+        @username.wins += 1
         puts "You win. Play again? (yes/no)"
-        response = gets.chomp.downcase
-        if response == "yes"
-          new_move
-        else
-          exit
-        end
+        prompt
     elsif (@move == "scissors" && @computer == "rock") ||
         (@move == "paper" && @computer == "scissors") ||
         (@move == "rock" && @computer == "paper")
+        @username.losses += 1
         puts "You lost, as expected. Get a life, loser!\nOr perhaps play again? (yes/no)"
-        response = gets.chomp.downcase
-        if response == "yes"
-          new_move
-        else
-          exit
-        end
+        prompt
     end
   end
 end

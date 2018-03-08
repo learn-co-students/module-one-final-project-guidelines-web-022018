@@ -1,5 +1,5 @@
-class User
-  attr_accessor :username
+class Player
+  attr_accessor :username, :wins, :losses
   @@all = []
 
   def self.all
@@ -8,6 +8,8 @@ class User
 
   def initialize(username)
     @username = username
+    @wins = 0
+    @losses = 0
     @@all << self
   end
 end
