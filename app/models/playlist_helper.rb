@@ -17,46 +17,34 @@ class PlaylistHelper
     output
   end
 
-  def self.add_input(selection, user)
+  def self.add_input(selection, type, user)
+    arr = Helper.get_input(type)
+    if arr.nil?
+      return
+    end
+    arr.each do |x|
+      begin
+        out = Adapter.send("find_#{type}", x, user)[1]
+      rescue
+        puts "Couldn't find result for #{x}"
+      end
+      selection.seed["seed_#{type.pluralize}".to_sym] << out
+    end
+  end
+
+  def self.add_selection(selection, user)
     loop do
       puts "What would you like to add?"
       puts "Artists, Genres or Tracks"
       input = gets.chomp.downcase
       case input
-      when /arti/
-        arr = Helper.get_input('artist')
-        if arr.nil?
-          return
-        end
-        arr.each do |x|
-          begin
-            out = Adapter.find_artist(x, user)[1]
-          rescue
-            puts "Couldn't find result for #{x}"
-          end
-          selection.seed[:seed_artists] << out
-        end
+      when /art/
+        add_input(selection, 'artist', user)
       when /gen/
-        arr = Helper.get_input('genre')
-        if arr.nil?
-          return
-        end
-        arr.each do |x|
-          selection.seed[:seed_genres] << x
-        end
+        add_input(selection, 'genre', user)
       when /tra/
-        arr = Helper.get_input('track')
-        if arr.nil?
-          return
-        end
-        arr.each do |x|
-          begin
-            selection.seed[:seed_tracks] << Adapter.find_track(x, user)[1]
-          rescue
-            puts "Couldn't find result for #{x}"
-          end
-        end
-      when /exit/
+        add_input(selection, 'track', user)
+      when /ex/
         break
       end
     end
@@ -65,18 +53,32 @@ class PlaylistHelper
 
   def self.select_function(user)
     selection = self.choose_playlist(user)
-    puts "Please choose a function."
-    puts "Add, Delete, Load, Exit"
-    input = gets.chomp.downcase
-    case input
-    when /add/
-      self.add_input(selection, user)
-    when /load/
-      selection.seed[:limit] = Helper.get_amount
-      Adapter.return_playlist(selection.seed, user)
-    when /del/
-      selection.destroy
-      selection.save
+    loop do
+      puts "Please choose a function."
+      puts "Add, Display, Delete, Load, Exit"
+      input = gets.chomp.downcase
+      case input
+      when /add/
+        self.add_selection(selection, user)
+      when /disp/
+        puts "#{selection.name}:"
+        selection.objects.each do |k, v|
+          out = k.to_s
+          out.slice! "seed_"
+          puts "  #{out}"
+          v.each do |val|
+            puts "    #{val.name}"
+          end
+        end
+      when /load/
+        selection.seed[:limit] = Helper.get_amount
+        Adapter.return_playlist(selection.seed, user)
+      when /del/
+        selection.destroy
+        selection.save
+      when /ex/
+        return
+      end
     end
   end
 

@@ -69,7 +69,25 @@ class Helper
     args[:tracks] = self.get_input('track')
     return if !args[:tracks]
     amount = self.get_amount
-    Adapter.seed_format(args, amount, user)
+    return Adapter.seed_format(args, amount, user)
+  end
+
+  def self.get_user
+    loop do
+      input = gets.chomp
+      if User.all_users.include? input
+        return User.find_by(name: input)
+      else
+        puts ColorizedString["User not found. Would you like to create a new profile? (Y/N)"].colorize(:red)
+        y_n = gets.chomp.downcase
+        case y_n
+        when 'y'
+          return User.create(name: input)
+        else
+          puts ColorizedString["Please enter a username."].colorize(:red)
+        end
+      end
+    end
   end
 
 end

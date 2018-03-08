@@ -64,14 +64,14 @@ class Adapter
     end
   end
 
-  def self.seed_saver(args, user)
+  def self.seed_saver(seed, objects, user)
     puts "Would you like to save this seed?"
     input = gets.chomp.downcase
     case input
     when /y/
       puts "Please enter a name"
       input = gets.chomp.downcase
-      seed = Seed.create(name: input, seed: args, user_id: user.id)
+      seed = Seed.create(name: input, seed: seed, objects: objects, user_id: user.id)
       puts "Saved as #{input}"
     else
       return
@@ -79,7 +79,6 @@ class Adapter
   end
 
   def self.return_playlist(args, user)
-    binding.pry
     output = RSpotify::Recommendations.generate(args)
     puts "~~~~~~"
     output.tracks.each do |song|
@@ -91,24 +90,22 @@ class Adapter
 
   def self.seed_format(inputs, amount, user)
     args = {limit: amount.to_i}
+    objs = {}
     inputs.each do |hash, key|
       arg_arr = []
+      obj_arr = []
       key.each do |k|
         begin
           filtered = self.send("find_#{hash.to_s.singularize}".to_sym, k, user)
           arg_arr << filtered[1]
+          obj_arr << filtered[0]
         rescue
           puts "Couldn't find #{hash} query #{k}"
         end
       end
+      objs["seed_#{hash}".to_sym] = obj_arr
       args["seed_#{hash}".to_sym] = arg_arr
     end
-    begin
-      self.return_playlist(args, user)
-      self.seed_saver(args, user)
-    rescue
-      puts "Sorry, playlist generation failed."
-      puts "Perhaps your seed was too specific?"
-    end
+    [args, objs]
   end
 end
