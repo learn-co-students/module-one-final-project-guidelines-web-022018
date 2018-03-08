@@ -1,7 +1,8 @@
 require_relative '../config/environment'
 
-# binding.pry
+binding.pry
 a = Artii::Base.new
+<<<<<<< HEAD
 colorizer = Lolize::Colorizer.new
 
 welcome = a.asciify("Welcome to")
@@ -34,22 +35,42 @@ loop do
     end
   end
 end
+=======
+puts ColorizedString[a.asciify("Welcome to")].colorize(:light_green)
+puts ColorizedString[a.asciify("SpotRec")].colorize(:light_green).blink
+puts ColorizedString["Please enter a username."].colorize(:red)
+user = Helper.get_user
+>>>>>>> master
 loop do
   puts ColorizedString["Logged in as #{user.name}. Please choose a function. Type 'help' for commands."].colorize(:magenta)
   input = gets.chomp
   case input.downcase
-  when 'exit'
+  when /ex/
     break
-  when /recommend/
-    Helper.all_seed(user)
-  when /artist/
+  when /rec/
+    dat = Helper.all_seed(user)
+    begin
+      Adapter.return_playlist(dat[0], user)
+      Adapter.seed_saver(dat[0], dat[1], user)
+    rescue
+      puts "Sorry, playlist generation failed."
+      puts "Perhaps your seed was too specific?"
+    end
+  when /art/
     user.my_artists
-  when /genre/
+  when /gen/
     user.my_genres
   when /track/
     user.my_tracks
-  when 'help'
+  when /play/
+    if user.seeds.empty?
+      puts "No playlists saved"
+    else
+      PlaylistHelper.select_function(user)
+    end
+  when /help/
     puts ColorizedString['Recommendation - Enter seeds to create recommendation playlist'].colorize(:white).on_red
+    puts ColorizedString['Playlist - View, load and modify saved playlist seeds'].colorize(:white).on_red
     puts ColorizedString['My Artists - Display all artists you have saved to your profile'].colorize(:red).on_blue
     puts ColorizedString['My Genres - Display all genres you have saved to your profile'].colorize(:red).on_blue
     puts ColorizedString['My Tracks - Display all tracks you have saved to your profile'].colorize(:red).on_blue

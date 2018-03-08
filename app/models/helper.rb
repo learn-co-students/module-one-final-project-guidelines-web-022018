@@ -54,25 +54,40 @@ class Helper
       puts "Not a number"
       input = 30
     end
+    if input.to_i > 100
+      input = 100
+    end
     input
   end
 
   def self.all_seed(user)
-    args = {artists: [], genres: [], tracks: [], amount: 30}
+    args = {artists: [], genres: [], tracks: []}
     args[:artists] = self.get_input('artist')
     return if !args[:artists]
     args[:genres] = self.get_input('genre')
     return if !args[:genres]
     args[:tracks] = self.get_input('track')
     return if !args[:tracks]
-    if args[:artists].empty? && args[:genres].empty? && args[:tracks].empty?
-      puts "~~~"
-      puts "Silence - Silence"
-      puts "~~~"
-      return
+    amount = self.get_amount
+    return Adapter.seed_format(args, amount, user)
+  end
+
+  def self.get_user
+    loop do
+      input = gets.chomp
+      if User.all_users.include? input
+        return User.find_by(name: input)
+      else
+        puts ColorizedString["User not found. Would you like to create a new profile? (Y/N)"].colorize(:red)
+        y_n = gets.chomp.downcase
+        case y_n
+        when 'y'
+          return User.create(name: input)
+        else
+          puts ColorizedString["Please enter a username."].colorize(:red)
+        end
+      end
     end
-    args[:amount] = self.get_amount
-    Adapter.seed(args, user)
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306210155) do
+ActiveRecord::Schema.define(version: 20180308193044) do
 
   create_table "artists", force: :cascade do |t|
     t.string "name"
@@ -35,11 +35,24 @@ ActiveRecord::Schema.define(version: 20180306210155) do
     t.index ["user_id"], name: "index_genres_users_on_user_id"
   end
 
+  create_table "seeds", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "name"
+    t.text    "seed"
+    t.text    "objects"
+  end
+
   create_table "tracks", force: :cascade do |t|
     t.string  "name"
     t.integer "artist_id"
     t.integer "genre_id"
     t.string  "spot_id"
+    t.float   "acousticness"
+    t.float   "danceability"
+    t.float   "energy"
+    t.float   "instrumentalness"
+    t.float   "valence"
+    t.float   "tempo"
   end
 
   create_table "tracks_users", id: false, force: :cascade do |t|
