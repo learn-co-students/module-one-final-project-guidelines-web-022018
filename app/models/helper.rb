@@ -7,7 +7,7 @@ class Helper
     @user = user
   end
 
-  def get_input(type)
+  def self.get_input(type)
     output = []
     loop do
       puts "Please enter #{type} name."
@@ -43,11 +43,11 @@ class Helper
 
   def all_seed
     args = {artists: [], genres: [], tracks: []}
-    args[:artists] = get_input('artist')
+    args[:artists] = self.class.get_input('artist')
     return if !args[:artists]
-    args[:genres] = get_input('genre')
+    args[:genres] = self.class.get_input('genre')
     return if !args[:genres]
-    args[:tracks] = get_input('track')
+    args[:tracks] = self.class.get_input('track')
     return if !args[:tracks]
     amount = get_amount
     return Adapter.seed_format(args, amount, user)
