@@ -2,10 +2,20 @@ require_relative '../config/environment'
 
 # binding.pry
 a = Artii::Base.new
-puts ColorizedString[a.asciify("Welcome to")].colorize(:light_green)
-puts ColorizedString[a.asciify("Spotpandorify")].colorize(:light_green).blink
-puts ColorizedString["Please enter a username."].colorize(:red)
+colorizer = Lolize::Colorizer.new
+
+welcome = a.asciify("Welcome to")
+colorizer.write welcome
+sleep(2)
+
+spotrec = a.asciify("Spotpandorify")
+colorizer.write(spotrec)
+puts ""
+sleep(2.5)
+
+puts ColorizedString["\nPlease enter a username:"].colorize(:red)
 user = nil
+
 loop do
   input = gets.chomp
   if User.all_users.include? input

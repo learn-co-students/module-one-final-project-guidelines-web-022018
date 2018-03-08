@@ -8,3 +8,5 @@ gem "require_all"
 gem 'rspotify'
 gem 'colorize', '~> 0.8.1'
 gem 'artii'
+# gem 'lolcat'
+gem 'lolize'

@@ -5,6 +5,8 @@ require 'pry'
 require 'colorize'
 require 'colorized_string'
 require 'artii'
+# require 'lolcat'
+require 'lolize'
 
 require_relative '../app/models/artist'
 require_relative '../app/models/genre'

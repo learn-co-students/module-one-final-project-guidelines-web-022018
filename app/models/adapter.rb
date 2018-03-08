@@ -71,9 +71,11 @@ class Adapter
     output = RSpotify::Recommendations.generate(args)
     puts "~~~~~~"
     output.tracks.each do |song|
-      puts "#{song.artists[0].name} - #{song.name}"
+      colorizer = Lolize::Colorizer.new
+      list = ("\n#{song.artists[0].name} - #{song.name}")
+      colorizer.write(list)
     end
-    puts "~~~~~~"
+    puts "\n~~~~~~"
   end
 
 end
