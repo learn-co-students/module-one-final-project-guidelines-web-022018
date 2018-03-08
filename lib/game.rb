@@ -81,7 +81,7 @@ class Game
   end
 
   def delete
-    puts "Feeling depressed with your crappy score? Delete yourself. (yes/no)"
+    puts "Feeling depressed with your crappy score? Delete yourself from the universe. (yes/no)"
     response = gets.chomp.downcase
     if response == "yes"
       user = find_user
