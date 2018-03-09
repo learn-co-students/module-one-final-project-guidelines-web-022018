@@ -1,5 +1,10 @@
 class Adapter
 
+  # This class still needs some refactoring.
+  # Once I realized how useful instantiating helpers with user / argument data could be, I rebuild helper and playlisthelper
+  # But this still uses a lot of class functions. These could be rebuilt to store inputs and user in an instantiated request
+  # This would make data flow a little cleaner.
+
   # searches for and returns a database object, or creates and returns one if it doesn't exist
   # returns both object and spotify ID, in order for this to be a nice dynamic block of code
   def self.find_artist(name, user)
