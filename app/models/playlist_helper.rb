@@ -10,7 +10,7 @@ class PlaylistHelper
       elsif input == "exit"
         break
       else
-        puts ColorizedString"Please enter a valid playlist".colorize(:red)
+        puts ColorizedString["Please enter a valid playlist"].colorize(:red)
       end
     end
   end
@@ -22,11 +22,13 @@ class PlaylistHelper
     end
     arr.each do |x|
       begin
-        out = Adapter.send("find_#{type}", x, user)[1]
+        out = Adapter.send("find_#{type}", x, user)
       rescue
         puts "Couldn't find result for #{x}"
       end
-      selection.seed["seed_#{type.pluralize}".to_sym] << out
+      selection.seed["seed_#{type.pluralize}".to_sym] << out[1]
+      selection.objects["seed_#{type.pluralize}".to_sym] << out[0]
+      selection.save
     end
   end
 
