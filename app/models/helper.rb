@@ -10,8 +10,8 @@ class Helper
   def self.get_input(type)
     output = []
     loop do
-      puts "Please enter #{type} name."
-      puts "Type 'next' to continue. Or exit to return "
+      puts ColorizedString["Please enter #{type} name."].colorize(:blue)
+      puts ColorizedString["Type 'next' to continue. Or exit to return "].colorize(:light_blue)
       input = gets.chomp
       case input
       when 'next'
@@ -27,7 +27,7 @@ class Helper
   end
 
   def get_amount
-    puts "How many songs should I give you?"
+    puts ColorizedString["How many songs should I give you?"].colorize(:blue)
     input = gets.chomp
     begin
       Integer(input)

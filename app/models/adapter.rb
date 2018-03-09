@@ -65,7 +65,7 @@ class Adapter
   end
 
   def self.seed_saver(seed, objects, user)
-    puts "Would you like to save this seed?"
+    puts ColorizedString["Would you like to save this seed?"].colorize(:magenta)
     input = gets.chomp.downcase
     case input
     when /y/
@@ -82,9 +82,7 @@ class Adapter
     output = RSpotify::Recommendations.generate(args)
     puts "~~~~~~"
     output.tracks.each do |song|
-      colorizer = Lolize::Colorizer.new
-      list = ("\n#{song.artists[0].name} - #{song.name}")
-      colorizer.write(list)
+      puts "#{ColorizedString[song.artists[0].name].colorize(:magenta)} - #{ColorizedString[song.name].colorize(:red)}"
     end
     puts "\n~~~~~~"
     puts "Go here to convert your playlist: http://www.playlist-converter.net/#/"
