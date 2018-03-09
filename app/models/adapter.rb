@@ -2,7 +2,7 @@ class Adapter
 
   def self.find_artist(name, user)
     artists = Artist.arel_table
-    if Artist.where(artists[:name].matches(name)).empty?
+    if Artist.where(artists[:name].matches("%#{name}%")).empty?
       artist = RSpotify::Artist.search(name)[0]
       if artist.nil?
         return nil
@@ -11,14 +11,14 @@ class Adapter
       user.artists << output
       user.save
     else
-      output = Artist.where(artists[:name].matches(name))[0]
+      output = Artist.where(artists[:name].matches("%#{name}%"))[0]
     end
     return [output, output.spot_id]
   end
 
   def self.find_track(name, user)
     tracks = Track.arel_table
-    if Track.where(tracks[:name].matches(name)).empty?
+    if Track.where(tracks[:name].matches("%#{name}%")).empty?
       track = RSpotify::Track.search(name)[0]
       if track.nil?
         return nil
@@ -37,7 +37,7 @@ class Adapter
       user.tracks << output
       user.save
     else
-      output = Track.where(tracks[:name].matches(name))[0]
+      output = Track.where(tracks[:name].matches("%#{name}%"))[0]
     end
     return [output, output.spot_id]
   end

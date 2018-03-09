@@ -16,7 +16,6 @@ class PlaylistHelper
       if user.seeds.find_by(name: input)
         output = user.seeds.find_by(name: input)
         return self.new(user, output)
-        # select_function(output, user)
       elsif input == "exit"
         break
       else
@@ -38,7 +37,6 @@ class PlaylistHelper
       end
       selection.seed["seed_#{type.pluralize}".to_sym] << out[1]
       selection.objects["seed_#{type.pluralize}".to_sym] << out[0]
-      binding.pry
       selection.save
     end
   end
