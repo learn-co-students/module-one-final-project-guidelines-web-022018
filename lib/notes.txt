@@ -44,10 +44,24 @@
     Description: This beer is a beer for drinking into your mouth.
     Hops: Cascade Hops, Some Other Stuff
     Malt: Malt
+    Recipe: ""
 
 
   -Favorites Screen-
-    Open
+  "Open description & recipe by typing a beers name.
+  enter 'next' for next page, 'prev' for previous page, 'fav' to save
+  to your favorites and 'home' to return to the navigation screen"
+  (46 results)
+
+  1. Sierra Nevada
+  2. Fat Tire
+  3. And Another Double IPA
+  4. UGH MORE? Brewing Company Pilsner
+  5. Saison de Nonsense
+  6. Another Beer IPA
+
+
+  Enter Command Here
 
   -Exit Screen-
     "Goodbye!"

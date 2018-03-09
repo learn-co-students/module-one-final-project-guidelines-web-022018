@@ -15,31 +15,16 @@ class CommandLineInterface
   def get_preferences(user)
     # abv min = 0, max = 55
     abv_map = {1=>(0..10),2=>(10..20),3=>(20..30),4=>(30..40),5=>(40..55)}
-    #
-    # ibu min = 0, max = 1157
     ibu_map = {1=>(0..231),2=>(231..462),3=>(462..693),4=>(693..924),5=>(924..1157)}
-    #
-    # srm min = 1, max = 254
     srm_map = {1=>(0..50),2=>(50..100),3=>(100..150),4=>(150..200),5=>(200..254)}
-    #
-    # target_fg min = 1000, max = 1125
     target_fg_map = {1=>(1000..1025),2=>(1025..1050),3=>(1050..1075),4=>(1075..1100),5=>(1100..1125)}
 
-    choices = {"1" => "Alcohol Content",
-      "2" => "Darkness",
-      "3" => "Clarity",
-      "4" => "Bitterness",
+
+    choices = {
       "Alcohol Content" => "abv",
       "Darkness" => "srm",
       "Clarity" => "ebc",
       "Bitterness" => "ibu"}
-
-    levels = {"1" => "Low",
-      "2" => "Medium",
-      "3" => "High",
-      "Low" => "low",
-      "Medium" => "medium",
-      "High" => "high"}
 
     if user.id == User.last.id
       puts "Please choose your preferences from the following options: \n1: Alcohol Content \n2: Darkness \n3: Clarity \n4: Bitterness"
