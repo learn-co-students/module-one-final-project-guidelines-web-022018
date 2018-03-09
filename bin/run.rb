@@ -41,7 +41,8 @@ loop do
     if user.seeds.empty?
       puts "No playlists saved"
     else
-      PlaylistHelper.choose_playlist(user)
+      playlist_edit = PlaylistHelper.choose_playlist(user)
+      playlist_edit.select_function
     end
   when /help/
     puts ColorizedString['Recommendation - Enter seeds to create recommendation playlist'].colorize(:white).on_red

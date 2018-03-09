@@ -1,4 +1,13 @@
 class PlaylistHelper
+
+  attr_reader :user
+  attr_accessor :selection
+
+  def initialize(user, selection)
+    @user = user
+    @selection = selection
+  end
+
   def self.choose_playlist(user)
     loop do
       puts "Please choose a playlist:"
@@ -6,7 +15,8 @@ class PlaylistHelper
       input = gets.chomp.downcase
       if user.seeds.find_by(name: input)
         output = user.seeds.find_by(name: input)
-        select_function(output, user)
+        return self.new(user, output)
+        # select_function(output, user)
       elsif input == "exit"
         break
       else
@@ -15,7 +25,7 @@ class PlaylistHelper
     end
   end
 
-  def self.add_input(selection, type, user)
+  def add_input(type)
     arr = Helper.get_input(type)
     if arr.nil?
       return
@@ -28,22 +38,23 @@ class PlaylistHelper
       end
       selection.seed["seed_#{type.pluralize}".to_sym] << out[1]
       selection.objects["seed_#{type.pluralize}".to_sym] << out[0]
+      binding.pry
       selection.save
     end
   end
 
-  def self.add_selection(selection, user)
+  def add_selection
     loop do
       puts ColorizedString["What would you like to add?"].colorize(:blue)
       puts ColorizedString["Artists, Genres or Tracks"].colorize(:blue)
       input = gets.chomp.downcase
       case input
       when /art/
-        add_input(selection, 'artist', user)
+        add_input('artist')
       when /gen/
-        add_input(selection, 'genre', user)
+        add_input('genre')
       when /tra/
-        add_input(selection, 'track', user)
+        add_input('track')
       when /ex/
         break
       end
@@ -51,14 +62,14 @@ class PlaylistHelper
     selection.save
   end
 
-  def self.select_function(selection, user)
+  def select_function
     loop do
       puts ColorizedString["Please choose a function."].colorize(:blue)
       puts ColorizedString["Add, Display, Delete, Load, Exit"].colorize(:blue)
       input = gets.chomp.downcase
       case input
       when /add/
-        self.add_selection(selection, user)
+        add_selection
       when /disp/
         puts ColorizedString["\n#{selection.name}:"].colorize(:black).on_white
         selection.objects.each do |k, v|

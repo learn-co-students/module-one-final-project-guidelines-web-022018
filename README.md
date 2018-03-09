@@ -1,40 +1,28 @@
-# What It Does
+# Welcome to SpotRec
 
-- Asks for a local username
-- Stores tracks, genres and artists that the user likes OR uses as seeds
-- Stores seed lists under user-defined names
-- Returns seeded playlists in text format arranged by a metric that the user selects (Valence, Danceability, etc)
-- Links to http://www.playlist-converter.net/#/ underneath the text so that users can convert the list into a Spotify playlist.
+  SpotRec is a command line interface that gives you in-depth control over Spotify's recommendation and seeding algorithm. You can create seeded playlists, save and edit those playlists later, view and reload your stored tracks, artists, genres and playlists, and take those playlists online to convert into Spotify or YouTube playlists for your listening pleasure.
 
-# Tables
-- User Table
-- Artist
-- Track
-- Genres
-- Seed Arrays (needs to store type, array of inputs)
+# Installation
 
-# Interface
-- It should ask whether the user wants to call up a saved seed, create a new seed, or look at their saved tracks & artists
-- If they want to create a new seed, it should ask whether they want to search by artist, genre, or track
-  - Then it should ask for inputs of as many genre, artist or track names as the user wants
-  - Then it should ask which of our five attributes is most important (Danceability, valence, etc)
-  - Then it should ping the spotify API for an array of track results
-  - Then it should sort by attribute
-  - Then it should map through the array and return a plaintext list of Track - Artist
-  - If they like this seed, it should prompt to save the seed with a name.
-- If they want to use an old seed, it should perform a seed search based on a saved array and type.
-- If they want info on a track, it should ping spotify servers for that track and provide a prompt to search for any metadata
+  Make sure you run *bundle install* in the root directory of the application to load dependencies.
 
+  Start the program from the root application directory with *ruby bin/run.rb*
 
-```ruby
-u = User.create("andrew")
-a = Artist.create("bananaphone")
+# Instructions
 
-#u.artists will look at join table to grab artists associated with given user
-# << add artist obj to user artists collection
-u.artists << a
-# persist changes in db with save
-u.save
+  - Homepage
+    - Recommend - Takes an input of several artists, genres and tracks and returns a curated playlist of song recommendations.
+      *NOTE* Spotify's recommendation algorithm can be finnicky. If recommendation is failing, try cutting down your inputs.
+      *ALSO* Extremely disparate inputs will make Spotify freak out. Beethoven and Kanye will probably spit an error.
 
-find_genre(RSpotify::Artist.search(track.artists[0].name)[0].genres[0])
-```
+    - Playlists - Loads up all playlists you have saved to your username
+      - Add - Add additional inputs to the playlist
+      - Display - Display current seeded inputs for the playlist
+      - Load - Reload seed and return a new playlist from Spotify of your desired length
+      - Delete - Delete playlist from the database
+
+    - My Tracks / Genres / Artists - Displays all tracks, artists or genres you have used as seed inputs and have data stored locally for.
+
+    - Help - Display all available commands
+
+    - Exit - Quit the program
