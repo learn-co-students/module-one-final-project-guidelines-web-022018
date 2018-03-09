@@ -26,3 +26,7 @@
     - Help - Display all available commands
 
     - Exit - Quit the program
+
+# A Few Notes
+
+  Spotify can't handle requests with too many seeds. Typically three or four artists, two or three genres, and a couple tracks it the most it can handle if they are moderately related. More extreme disparities will throw an error. If you keep getting errors, try slimming down your seed input.
