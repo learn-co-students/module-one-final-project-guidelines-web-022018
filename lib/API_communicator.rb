@@ -13,7 +13,7 @@ end
 
 def get_api_auth
   hash = get_hash
-  "ts=#{hash[0]}&apikey=#{PUBLIC}&hash=#{hash[1]}"
+  "limit=100&ts=#{hash[0]}&apikey=#{PUBLIC}&hash=#{hash[1]}"
 end
 
 def get_api_search(input)
