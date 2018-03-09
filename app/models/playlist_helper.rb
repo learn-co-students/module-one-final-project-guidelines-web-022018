@@ -10,7 +10,7 @@ class PlaylistHelper
       elsif input == "exit"
         break
       else
-        puts "Please enter a valid playlist"
+        puts ColorizedString"Please enter a valid playlist".colorize(:red)
       end
     end
   end
@@ -32,8 +32,8 @@ class PlaylistHelper
 
   def self.add_selection(selection, user)
     loop do
-      puts "What would you like to add?"
-      puts "Artists, Genres or Tracks"
+      puts ColorizedString["What would you like to add?"].colorize(:blue)
+      puts ColorizedString["Artists, Genres or Tracks"].colorize(:blue)
       input = gets.chomp.downcase
       case input
       when /art/
@@ -51,8 +51,8 @@ class PlaylistHelper
 
   def self.select_function(selection, user)
     loop do
-      puts "Please choose a function."
-      puts "Add, Display, Delete, Load, Exit"
+      puts ColorizedString["Please choose a function."].colorize(:blue)
+      puts ColorizedString["Add, Display, Delete, Load, Exit"].colorize(:blue)
       input = gets.chomp.downcase
       case input
       when /add/
@@ -69,7 +69,11 @@ class PlaylistHelper
         end
       when /load/
         selection.seed[:limit] = Helper.get_amount
-        Adapter.return_playlist(selection.seed, user)
+        begin
+          Adapter.return_playlist(selection.seed, user)
+        rescue => e
+          puts ColorizedString["Sorry, playlist generation failed."].colorize(:red)
+        end
       when /del/
         selection.destroy
         selection.save

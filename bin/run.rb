@@ -13,7 +13,6 @@ puts ""
 sleep(0.5)
 
 puts ColorizedString["\nPlease enter a username:"].colorize(:red)
-
 user = Helper.get_user
 
 loop do
@@ -29,8 +28,8 @@ loop do
       Adapter.return_playlist(dat[0], user)
       Adapter.seed_saver(dat[0], dat[1], user)
     rescue
-      puts "Sorry, playlist generation failed."
-      puts "Perhaps your seed was too specific?"
+      puts ColorizedString["Sorry, playlist generation failed."].colorize(:red)
+      puts ColorizedString["Perhaps your seed was too specific?"].colorize(:red)
     end
   when /art/
     user.my_artists

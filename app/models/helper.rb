@@ -10,8 +10,8 @@ class Helper
   def self.get_input(type)
     output = []
     loop do
-      puts "Please enter #{type} name."
-      puts "Type 'next' to continue. Or exit to return "
+      puts ColorizedString["Please enter #{type} name."].colorize(:blue)
+      puts ColorizedString["Type 'next' to continue. Or exit to return "].colorize(:light_blue)
       input = gets.chomp
       case input
       when 'next'
@@ -27,7 +27,7 @@ class Helper
   end
 
   def self.get_amount
-    puts "How many songs should I give you?"
+    puts ColorizedString["How many songs should I give you?"].colorize(:blue)
     input = gets.chomp
     begin
       Integer(input)
@@ -47,9 +47,9 @@ class Helper
     return if !args[:artists]
     args[:genres] = self.class.get_input('genre')
     return if !args[:genres]
-    args[:tracks] = self.class.namget_input('track')
+    args[:tracks] = self.class.get_input('track')
     return if !args[:tracks]
-    amount = self.get_amount
+    amount = self.class.get_amount
     return Adapter.seed_format(args, amount, user)
   end
 
