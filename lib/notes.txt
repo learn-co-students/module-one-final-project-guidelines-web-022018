@@ -1,11 +1,53 @@
-abv min = 0, max = 55
-{1=>[0..10],2=>[10..20],3=>[20..30],4=>[30..40],5=>[40..55]}
+---Query Ranges---
+  abv min = 0, max = 55
+  ibu min = 0, max = 1157
+  srm min = 1, max = 254
+  target_fg min = 1000, max = 1125
 
-ibu min = 0, max = 1157
-{1=>[0..231],2=>[231..462],3=>[462..693],4=>[693..924],5=>[924..1157]}
+---User Prompts---
 
-srm min = 1, max = 254
-{1=>[0..50],2=>[50..100],3=>[100..150],4=>[150..200],5=>[200..254]}
+  -Splash-
+    "Enter your name to log in"
 
-target_fg min = 1000, max = 1125
-{1=>[1000..1025],2=>[1025..1050],3=>[1050..1075],4=>[1075..1100],5=>[1100..1125]}
+  -User Home-
+    "Would you like to *Query*, *Display Favorites* or *Log Out*"
+
+  -Query Prompt-
+    "Please construct your query using the following syntax
+    [attribute] [amount] where 'attribute' can be one of the following:
+    alcohol_content, hoppiness, cloudiness or darkness. The 'amount' parameter
+    can be an integer from 1 to 5. You can filter by multiple attributes
+    by typing your constraints separated by commas."
+    Enter Command Here
+
+  -List Screen-
+    "Open description & recipe by typing a beers name.
+    enter 'next' for next page, 'prev' for previous page, 'fav' to save
+    to your favorites and 'home' to return to the navigation screen"
+    (46 results)
+
+    31. Sierra Nevada
+    32. Fat Tire
+    33. Number 9
+    34. Heady Topper
+    35. Saison de Nonsense
+    36. Another Beer IPA
+    37. And Another Double IPA
+    38. More Beer Stout
+    39. UGH MORE? Brewing Company Pilsner
+    40. And One Last Octuple Session IPA
+
+    Enter Command Here
+
+  -Description & Recipe-
+    "Name: Sierra Nevada, Alcohol Content: 3, Hoppiness: 4, Cloudiness: 2, Darkness: 3
+    Description: This beer is a beer for drinking into your mouth.
+    Hops: Cascade Hops, Some Other Stuff
+    Malt: Malt
+
+
+  -Favorites Screen-
+    Open
+
+  -Exit Screen-
+    "Goodbye!"
