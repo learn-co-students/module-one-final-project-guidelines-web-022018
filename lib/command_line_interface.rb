@@ -2,14 +2,13 @@ class CommandLineInterface
 
   def welcome
     puts "Welcome to Beer Recipe Finder!"
+
   end
 
   def get_user
-    puts "Please enter your name"
+    puts "Please enter your name to log in"
     user_id = gets.chomp
     user = User.find_or_create_by(name: user_id)
-    get_preferences(user)
-    user
   end
 
   def get_preferences(user)
@@ -25,34 +24,68 @@ class CommandLineInterface
       "Darkness" => "srm",
       "Clarity" => "ebc",
       "Bitterness" => "ibu"}
-
+      options = ["Query", "Display Favorites", "Log Out"]
     if user.id == User.last.id
-      puts "Please choose your preferences from the following options: \n1: Alcohol Content \n2: Darkness \n3: Clarity \n4: Bitterness"
-      attribute = gets.chomp
-      while choices.keys.include?(attribute)
-        "Please type 1, 2, or 3 and press return."
-         attribute = gets.chomp
-         puts "Please enter an #{attribute} level:  \n1: Low \n2: Medium \n3: High"
-         level = gets.chomp
-        while levels.keys.include?(level)
-          "Please type 1, 2, or 3 and press return."
-          level = gets.chomp
-        end
-      end
+      puts "Would you like to *Query*, *Display Favorites* or *Log Out*"
+        answer = gets.chomp
+            while options.map(&:downcase).include?(answer.downcase)
+              if answer.downcase == "query"
+                puts  "Please construct your query using the following syntax
+                  [attribute] [amount] where 'attribute' can be one of the following:
+                  alcohol_content, hoppiness, cloudiness or darkness. The 'amount' parameter
+                  can be an integer from 1 to 5. You can filter by multiple attributes
+                  by typing your constraints separated by commas."
+              elsif answer.downcase == "display favorites"
+                puts "You have no favorites yet!"
+              elsif answer.downcase == "log out"
+                welcome
+              end
+            end
+
+    #      attribute = gets.chomp
+    #      puts "Please enter an #{attribute} level:  \n1: Low \n2: Medium \n3: High"
+    #      level = gets.chomp
+    #     while levels.keys.include?(level)
+    #       "Please type 1, 2, or 3 and press return."
+    #       level = gets.chomp
+    #     end
+    #   end
     else
       puts "Welcome back, #{user.name}!"
-      puts "Please choose your preferences from the following options:  \n1: Alcohol Content \n2: Darkness \n3: Clarity \n4: Bitterness"
-      attribute = gets.chomp
-      while choices.keys.include?(attribute)
-        "Please type 1, 2, or 3 and press return."
-        attribute = gets.chomp
-        puts "Please enter a #{attibute}level: \n1: Low \n2: Medium \n3: High"
-        level = gets.chomp
-          while levels.keys.include?(level)
-            "Please type 1, 2, or 3 and press return."
-            level = gets.chomp
-          end
+      puts "Would you like to *Query*, *Display Favorites* or *Log Out*"
+        answer = gets.chomp
+            while options.map(&:downcase).include?(answer.downcase)
+              if answer.downcase == "query"
+                puts  "Please construct your query using the following syntax
+                  [attribute] [amount] where 'attribute' can be one of the following:
+                  alcohol_content, hoppiness, cloudiness or darkness. The 'amount' parameter
+                  can be an integer from 1 to 5. You can filter by multiple attributes
+                  by typing your constraints separated by commas."
+              elsif answer.downcase == "display favorites"
+                    #display favorites
+              elsif answer.downcase == "log out"
+                  welcome
+              end
+            end
       end
     end
-  end
 end
+
+
+
+#
+#       puts "Please choose your preferences from the following options:  \n1: Alcohol Content \n2: Darkness \n3: Clarity \n4: Bitterness"
+#       attribute = gets.chomp
+#       while choices.keys.include?(attribute)
+#         "Please type 1, 2, or 3 and press return."
+#         attribute = gets.chomp
+#         puts "Please enter a #{attibute}level: \n1: Low \n2: Medium \n3: High"
+#         level = gets.chomp
+#           while levels.keys.include?(level)
+#             "Please type 1, 2, or 3 and press return."
+#             level = gets.chomp
+#           end
+#       end
+#     end
+#   end
+# end
