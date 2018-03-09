@@ -26,7 +26,7 @@ class Helper
     output
   end
 
-  def get_amount
+  def self.get_amount
     puts "How many songs should I give you?"
     input = gets.chomp
     begin
@@ -47,9 +47,9 @@ class Helper
     return if !args[:artists]
     args[:genres] = self.class.get_input('genre')
     return if !args[:genres]
-    args[:tracks] = self.class.get_input('track')
+    args[:tracks] = self.class.namget_input('track')
     return if !args[:tracks]
-    amount = get_amount
+    amount = self.get_amount
     return Adapter.seed_format(args, amount, user)
   end
 
