@@ -1,5 +1,7 @@
 class Adapter
 
+  # searches for and returns a database object, or creates and returns one if it doesn't exist
+  # returns both object and spotify ID, in order for this to be a nice dynamic block of code
   def self.find_artist(name, user)
     artists = Artist.arel_table
     if Artist.where(artists[:name].matches("%#{name}%")).empty?
@@ -54,6 +56,7 @@ class Adapter
     return [genre, genre.name]
   end
 
+  # Exists to make life easier on find_track by pulling genre from a track's artist
   def self.genre_id_helper(artist, user)
     genre = RSpotify::Artist.search(artist.name)[0].genres[0]
     if !genre.nil?
@@ -64,6 +67,7 @@ class Adapter
     end
   end
 
+  # archives seeds with both Spot_IDs (in seed variable) and full database objects for reading from
   def self.seed_saver(seed, objects, user)
     puts ColorizedString["Would you like to save this seed?"].colorize(:magenta)
     input = gets.chomp.downcase
@@ -88,6 +92,7 @@ class Adapter
     puts "Go here to convert your playlist: http://www.playlist-converter.net/#/"
   end
 
+  # takes our inputs and converts them so they can plug into an RSpotify playlist request
   def self.seed_format(inputs, amount, user)
     args = {limit: amount.to_i}
     objs = {}

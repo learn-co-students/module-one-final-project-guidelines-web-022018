@@ -15,6 +15,11 @@ sleep(0.5)
 puts ColorizedString["\nPlease enter a username:"].colorize(:red)
 user = Helper.get_user
 
+# Chose to store the core program loop here. Not sure if this should've gone into its own class function or not.
+# All actual functionality is stored elsewhere
+# Helper is main CLI class
+# Adapter handles Spotify queries
+# PlaylistHelper handles modification of saved playlists
 loop do
   puts ColorizedString["Logged in as #{user.name}. Please choose a function. Type 'help' for commands."].colorize(:magenta)
   input = gets.chomp

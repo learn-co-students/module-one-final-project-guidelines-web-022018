@@ -8,6 +8,7 @@ class PlaylistHelper
     @selection = selection
   end
 
+  #instantiates a new playlisthelper instance with user and playlist object with which to modify
   def self.choose_playlist(user)
     loop do
       puts "Please choose a playlist:"
@@ -24,6 +25,7 @@ class PlaylistHelper
     end
   end
 
+  # refactored to be nice and dynamic and work on any of our three input types
   def add_input(type)
     arr = Helper.get_input(type)
     if arr.nil?
@@ -41,6 +43,7 @@ class PlaylistHelper
     end
   end
 
+  # much slicker after building out input helper functions
   def add_selection
     loop do
       puts ColorizedString["What would you like to add?"].colorize(:blue)
@@ -60,6 +63,7 @@ class PlaylistHelper
     selection.save
   end
 
+  # this can probably be cleaned up. Display should be its own helper method.
   def select_function
     loop do
       puts ColorizedString["Please choose a function."].colorize(:blue)

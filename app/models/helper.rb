@@ -3,10 +3,13 @@ class Helper
   attr_reader :user
   attr_accessor :args, :inputs
 
+  # making the class initializable and storing user here removes the need to pass it from function to function
+  # this took me way too long to figure out
   def initialize(user)
     @user = user
   end
 
+  # takes our input strings to be delivered to the formatter in Adapter
   def self.get_input(type)
     output = []
     loop do
@@ -26,6 +29,7 @@ class Helper
     output
   end
 
+  # Broke this out into its own input after we ran into enough qualifiers for a valid number input
   def self.get_amount
     puts ColorizedString["How many songs should I give you?"].colorize(:blue)
     input = gets.chomp
@@ -41,6 +45,8 @@ class Helper
     input
   end
 
+  # Very happy with how clean this became after making get_input able to handle all three input types
+  # This used to be very ugly and contain unique code for each of the three data types
   def all_seed
     args = {artists: [], genres: [], tracks: []}
     args[:artists] = self.class.get_input('artist')
