@@ -1,0 +1,29 @@
+U:2ActiveRecord::ConnectionAdapters::SchemaCache[
+i{I"schema_migrations:ET[o:-ActiveRecord::ConnectionAdapters::Column:
+@nameI"version;T:@table_nameI"schema_migrations;T:@sql_type_metadatao:6ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+:@sql_typeI"varchar;T:
+@type:string:@limit0:@precision0:@scale0:
+@nullF:@default0:@default_function0:@collation0:@comment0I"ar_internal_metadata;T[	o;;I"key;T;	I"ar_internal_metadata;T;
+o;
+;I"varchar;T;;;0;0;0;F;0;0;0;0o;;I"
+value;T;	@;
+o;
+;I"varchar;T;;;0;0;0;T;0;0;0;0o;;I"created_at;T;	@;
+o;
+;I"datetime;T;:datetime;0;0;0;F;0;0;0;0o;;I"updated_at;T;	@;
+o;
+;I"datetime;T;;;0;0;0;F;0;0;0;0I"
+users;T[	o;;I"id;T;	I"
+users;T;
+o;
+;I"INTEGER;T;:integer;0;0;0;F;0;0;0;0o;;I"username;T;	@&;
+o;
+;I"varchar;T;;;0;0;0;T;0;0;0;0o;;I"	wins;T;	@&;
+o;
+;I"integer;T;;;0;0;0;T;0;0;0;0o;;I"losses;T;	@&;
+o;
+;I"integer;T;;;0;0;0;T;0;0;0;0{I"schema_migrations;T{@@
+I"ar_internal_metadata;T{	@@@@@@@@I"
+users;T{	@%@$@*@)@.@-@2@1{I"schema_migrations;TI"version;TI"ar_internal_metadata;TI"key;TI"
+users;TI"id;T{I"schema_migrations;TTI"ar_internal_metadata;TTI"
+users;TT
