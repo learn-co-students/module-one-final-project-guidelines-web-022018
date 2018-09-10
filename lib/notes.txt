@@ -1,0 +1,67 @@
+---Query Ranges---
+  abv min = 0, max = 55
+  ibu min = 0, max = 1157
+  srm min = 1, max = 254
+  target_fg min = 1000, max = 1125
+
+---User Prompts---
+
+  -Splash-
+    "Enter your name to log in"
+
+  -User Home-
+    "Would you like to *Query*, *Display Favorites* or *Log Out*"
+
+  -Query Prompt-
+    "Please construct your query using the following syntax
+    [attribute] [amount] where 'attribute' can be one of the following:
+    alcohol_content, hoppiness, cloudiness or darkness. The 'amount' parameter
+    can be an integer from 1 to 5. You can filter by multiple attributes
+    by typing your constraints separated by commas."
+    Enter Command Here
+
+  -List Screen-
+    "Open description & recipe by typing a beers name.
+    enter 'next' for next page, 'prev' for previous page, 'fav' to save
+    to your favorites and 'home' to return to the navigation screen"
+    (46 results)
+
+    31. Sierra Nevada
+    32. Fat Tire
+    33. Number 9
+    34. Heady Topper
+    35. Saison de Nonsense
+    36. Another Beer IPA
+    37. And Another Double IPA
+    38. More Beer Stout
+    39. UGH MORE? Brewing Company Pilsner
+    40. And One Last Octuple Session IPA
+
+    Enter Command Here
+
+  -Description & Recipe-
+    "Name: Sierra Nevada, Alcohol Content: 3, Hoppiness: 4, Cloudiness: 2, Darkness: 3
+    Description: This beer is a beer for drinking into your mouth.
+    Hops: Cascade Hops, Some Other Stuff
+    Malt: Malt
+    Recipe: ""
+
+
+  -Favorites Screen-
+  "Open description & recipe by typing a beers name.
+  enter 'next' for next page, 'prev' for previous page, 'fav' to save
+  to your favorites and 'home' to return to the navigation screen"
+  (46 results)
+
+  1. Sierra Nevada
+  2. Fat Tire
+  3. And Another Double IPA
+  4. UGH MORE? Brewing Company Pilsner
+  5. Saison de Nonsense
+  6. Another Beer IPA
+
+
+  Enter Command Here
+
+  -Exit Screen-
+    "Goodbye!"
